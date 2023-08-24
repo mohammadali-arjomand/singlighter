@@ -46,8 +46,6 @@ export default class HomePage extends Page {
 }`
 }
 
-
-
 switch (command) {
     case "new": {
         if (process.argv.length < 4)
@@ -86,7 +84,8 @@ function newCmd(projectName) {
         // make javascript files
         fs.mkdirSync(projectName + "/Scripts");
         fs.mkdirSync(projectName + "/Scripts/Pages");
-        fs.writeFileSync(projectName + "/Scripts/Singlight.js", '// Network Error:\n//\tSinglighter cannot load SinglightJs from Github');
+        fs.writeFileSync(projectName + "/Scripts/Singlight.js", '');
+        fs.writeFileSync(projectName + "/singlighter", '');
         fs.writeFileSync(projectName + "/Scripts/App.js", archive.app);
         fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
         fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
@@ -95,6 +94,13 @@ function newCmd(projectName) {
         https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js", res => {
             res.on("data", chunk => {
                 fs.appendFileSync(projectName + "/Scripts/Singlight.js", chunk.toString());
+            })
+        });
+
+        // get minified inner-singlighter from github
+        https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/singlighter.inner.min.js", res => {
+            res.on("data", chunk => {
+                fs.appendFileSync(projectName + "/singlighter", chunk.toString());
             })
         });
         successHelper("Project was created successfully");
