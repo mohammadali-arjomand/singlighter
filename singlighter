@@ -8,6 +8,9 @@ switch (command) {
             newCmd(process.argv[3]);
         break;
     }
+    default: {
+        console.error(`Bad usage\n'${command}' is not a command.`);
+    }
 }
 
 function newCmd(projectName) {
