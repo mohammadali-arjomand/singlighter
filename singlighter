@@ -1,3 +1,15 @@
-const command = process.argv;
+const command = process.argv[2];
 
-switch (command) {}
+switch (command) {
+    case "new": {
+        if (process.argv.length > 4)
+            console.error("You must set a name for your project");
+        else
+            newCmd(process.argv[3]);
+        break;
+    }
+}
+
+function newCmd(projectName) {
+    // ...
+}
