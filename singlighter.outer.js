@@ -39,7 +39,7 @@ router.addRoute("/", HomePage);
 export default router;`,
     page: `import { Page } from '../singlight.js';
 
-export default class {{PAGENAME}} extends Page {
+export default class HomePage extends Page {
     template() {
         return "<h1>Hi there!</h1>";
     }
@@ -85,7 +85,7 @@ function newCmd(projectName) {
         fs.writeFileSync(projectName + "/Scripts/Singlight.js", '');
         fs.writeFileSync(projectName + "/Scripts/App.js", archive.app);
         fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
-        fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page.replace("{{PAGENAME}}", "HomePage"));
+        fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
 
         // get minified singlight v4 from github
         https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js", res => {
