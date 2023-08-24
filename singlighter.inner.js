@@ -15,8 +15,6 @@ export default class {{PAGENAME}} extends Page {
 }`
 }
 
-
-
 switch (command) {
     case "make:page": {
         if (process.argv.length < 4)
