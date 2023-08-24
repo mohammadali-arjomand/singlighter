@@ -98,7 +98,7 @@ function newCmd(projectName) {
         });
 
         // get minified inner-singlighter from github
-        https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/singlighter.inner.min.js", res => {
+        https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/inner/singlighter.inner.min.js", res => {
             res.on("data", chunk => {
                 fs.appendFileSync(projectName + "/singlighter", chunk.toString());
             })
