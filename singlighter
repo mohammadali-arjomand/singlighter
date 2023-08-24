@@ -2,7 +2,7 @@ const command = process.argv[2];
 
 switch (command) {
     case "new": {
-        if (process.argv.length > 4)
+        if (process.argv.length < 4)
             console.error("You must set a name for your project");
         else
             newCmd(process.argv[3]);
