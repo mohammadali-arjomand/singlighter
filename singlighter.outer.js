@@ -86,7 +86,7 @@ function newCmd(projectName) {
         // make javascript files
         fs.mkdirSync(projectName + "/Scripts");
         fs.mkdirSync(projectName + "/Scripts/Pages");
-        fs.writeFileSync(projectName + "/Scripts/Singlight.js", '');
+        fs.writeFileSync(projectName + "/Scripts/Singlight.js", '// Network Error:\n//\tSinglighter cannot load SinglightJs from Github');
         fs.writeFileSync(projectName + "/Scripts/App.js", archive.app);
         fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
         fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
