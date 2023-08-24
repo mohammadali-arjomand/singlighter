@@ -54,8 +54,8 @@ function serveCmd() {
         if (!fs.existsSync(req.url)) req.url = "/";
         url = fs.lstatSync(req.url).isFile() ? "./" + req.url : `./${req.url}/index.html`;
         let output = fs.readFileSync(url);
+        if (url.substring(url.length-2, url.length) == 'js') res.setHeader('Content-Type', 'text/javascript');
         res.write(output);
-        if (url.substring(url.length-2, url.length) == js) res.writeHead(200, {'Content-type': "application/javascript"})
         res.end();
     };
 
