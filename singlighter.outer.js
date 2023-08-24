@@ -65,6 +65,10 @@ function errorHelper(text) {
     console.error('\x1b[31m%s\x1b[0m', text);
 }
 
+function successHelper(text) {
+    console.log("\x1b[32m%s\x1b[0m", text);
+}
+
 function newCmd(projectName) {
     if (fs.existsSync(projectName) && fs.readdirSync(projectName).length > 0)
         errorHelper(`Error:\n\t'${projectName}' directory is not empty`)
@@ -93,6 +97,6 @@ function newCmd(projectName) {
                 fs.appendFileSync(projectName + "/Scripts/Singlight.js", chunk.toString());
             })
         });
-        console.log("\x1b[32mProject was created successfully\x1b[0m");
+        successHelper("Project was created successfully");
     }
 }
