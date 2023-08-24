@@ -3,14 +3,18 @@ const command = process.argv[2];
 switch (command) {
     case "new": {
         if (process.argv.length < 4)
-            console.error("You must set a name for your project");
+            errorHelper("Bad usage:\n\tYou must set a name for your project")
         else
             newCmd(process.argv[3]);
         break;
     }
     default: {
-        console.error(`Bad usage\n'${command}' is not a command.`);
+        errorHelper(`Bad usage:\n\t'${command}' is not a command`)
     }
+}
+
+function errorHelper(text) {
+    console.error('\x1b[31m%s\x1b[0m', text);
 }
 
 function newCmd(projectName) {
