@@ -19,6 +19,10 @@ export default class {{PAGENAME}} extends Page {
 }
 
 switch (command) {
+    case "make:": {
+        makeCmd();
+        break;
+    }
     case "make:page": {
         if (process.argv.length < 4)
             errorHelper("Bad usage:\n\tYou must set a name for your page")
@@ -63,6 +67,18 @@ function errorHelper(text) {
 
 function successHelper(text) {
     console.log("\x1b[32m%s\x1b[0m", text);
+}
+
+function infoHelper(text) {
+    console.info("\x1b[34m%s\x1b[0m", text);
+}
+
+function makeCmd() {
+    infoHelper(`All make commands:
+    make:page
+    make:accessor
+    make:component
+    make:hook`);
 }
 
 function makePageCmd(pageName) {
