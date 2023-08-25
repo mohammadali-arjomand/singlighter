@@ -66,23 +66,39 @@ function successHelper(text) {
 }
 
 function makePageCmd(pageName) {
-    fs.writeFileSync(`./Scripts/Pages/${pageName}.js`, archive.page.replace("{{PAGENAME}}", pageName));
-    successHelper("Page was created successfully")
+    if (fs.existsSync(`./Scripts/Pages/${pageName}.js`))
+        errorHelper(`'${pageName}' already exists`)
+    else {
+        fs.writeFileSync(`./Scripts/Pages/${pageName}.js`, archive.page.replace("{{PAGENAME}}", pageName));
+        successHelper("Page was created successfully")
+    }
 }
 
 function makeAccessorCmd(accessorName) {
-    fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.function.replace("{{NAME}}", accessorName));
-    successHelper("Accessor was created successfully")
+    if (fs.existsSync(`./Scripts/Accessors/${accessorName}.js`))
+        errorHelper(`'${accessorName}' already exists`)
+    else {
+        fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.function.replace("{{NAME}}", accessorName));
+        successHelper("Accessor was created successfully")
+    }
 }
 
 function makeComponentCmd(componentName) {
-    fs.writeFileSync(`./Scripts/Components/${componentName}.js`, archive.function.replace("{{NAME}}", componentName));
-    successHelper("Component was created successfully")
+    if (fs.existsSync(`./Scripts/Components/${componentName}.js`))
+        errorHelper(`'${componentName}' already exists`)
+    else {
+        fs.writeFileSync(`./Scripts/Components/${componentName}.js`, archive.function.replace("{{NAME}}", componentName));
+        successHelper("Component was created successfully")
+    }
 }
 
 function makeHookCmd(hookName) {
-    fs.writeFileSync(`./Scripts/Hooks/${hookName}.js`, archive.function.replace("{{NAME}}", hookName));
-    successHelper("Hook was created successfully")
+    if (fs.existsSync(`./Scripts/Hooks/${hookName}.js`))
+        errorHelper(`'${hookName}' already exists`)
+    else {
+        fs.writeFileSync(`./Scripts/Hooks/${hookName}.js`, archive.function.replace("{{NAME}}", hookName));
+        successHelper("Hook was created successfully")
+    }
 }
 
 function serveCmd() {
