@@ -13,7 +13,7 @@ export default class {{PAGENAME}} extends Page {
         // ...
     }
 }`,
-    accessor: `export default function {{ACCESSORNAME}}() {
+    function: `export default function {{NAME}}() {
     // ...
 }`
 }
@@ -57,7 +57,7 @@ function makePageCmd(pageName) {
 }
 
 function makeAccessorCmd(accessorName) {
-    fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.accessor.replace("{{ACCESSORNAME}}", accessorName));
+    fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.function.replace("{{NAME}}", accessorName));
     successHelper("Accessor was created successfully")
 }
 
