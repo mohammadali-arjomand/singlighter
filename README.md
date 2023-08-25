@@ -1,18 +1,11 @@
 # Singlighter
 Singlighter is an installer/assistant for [SinglightJs](https://github.com/mohammadali-arjomand/singlightjs) framework
 
-# Installation
-Use this **npm** command for install **Singlighter**
+# Usage
+You can use **Singlighter** via **npx**
 ```bash
-npm i -g singlighter
+npx singlighter@latest
 ```
-
-## Create a project
-You can create a new **SinglightJs** project via **Singlighter** and **npx**
-```bash
-npx singlighter new my-app
-```
-[Learn more about **singlighter** commands](https://github.com/mohammadali-arjomand/singlighter/wiki)
 
 # Directories
 Singlighter will making directories like it
