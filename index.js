@@ -1,4 +1,10 @@
-const fs=require("fs"),https=require("https"),command=process.argv[2],archive={index:`<!DOCTYPE html>
+#!/usr/bin/env node
+const fs  = require("fs");
+const https = require("https");
+
+const command = process.argv[2];
+const archive = {
+    index: `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,11 +18,13 @@ const fs=require("fs"),https=require("https"),command=process.argv[2],archive={i
     <script type="module" src="./Scripts/App.js"></script>
 
 </body>
-</html>`,style:`* {
+</html>`,
+    style: `* {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-}`,app:`import { Singlight } from './Singlight.js';
+}`,
+    app: `import { Singlight } from './Singlight.js';
 import Router from './Router.js';
 import hooks from './Hooks/Fisher.js';
 
@@ -24,35 +32,106 @@ const app = new Singlight();
 app.router(Router);
 app.hooks(hooks);
 app.mount("#app");
-app.start();`,router:`import { Router } from './Singlight.js';
+app.start();`,
+    router: `import { Router } from './Singlight.js';
 import HomePage from './Pages/HomePage.js';
 
 const router = new Router();
 router.addRoute("/", HomePage);
 
-export default router;`,page:`import { Page } from '../singlight.js';
+export default router;`,
+    page: `import { Page } from '../singlight.js';
 
 export default class HomePage extends Page {
     template() {
         return "<h1>Hi there!</h1>";
     }
-}`,fisher:`// import ...
+}`,
+    fisher: `// import ...
 
 export default hooks = {
     // ...
-};`,apache:`<IfModule mod_negotiation.c>
+};`,
+    apache: `<IfModule mod_negotiation.c>
   Options -MultiViews
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index.html$ - [L]
+  RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
-</IfModule>`,nginx:`location / {
+</IfModule>`,
+    nginx: `location / {
   try_files $uri $uri/ /index.html;
-}`};function errorHelper(e){console.error("\x1b[31m%s\x1b[0m",e)}function successHelper(e){console.log("\x1b[32m%s\x1b[0m",e)}function newCmd(e){fs.existsSync(e)&&fs.readdirSync(e).length>0?errorHelper(`Error:
-	'${e}' directory is not empty`):(fs.existsSync(e)||fs.mkdirSync(e),fs.writeFileSync(e+"/index.html",archive.index),fs.mkdirSync(e+"/Styles"),fs.writeFileSync(e+"/Styles/main.css",archive.style),fs.mkdirSync(e+"/Scripts"),fs.mkdirSync(e+"/Scripts/Pages"),fs.mkdirSync(e+"/Scripts/Accessors"),fs.mkdirSync(e+"/Scripts/Hooks"),fs.mkdirSync(e+"/Scripts/Components"),fs.writeFileSync(e+"/Scripts/Singlight.js",""),fs.writeFileSync(e+"/singlighter",""),fs.writeFileSync(e+"/Scripts/App.js",archive.app),fs.writeFileSync(e+"/Scripts/Router.js",archive.router),fs.writeFileSync(e+"/Scripts/Pages/HomePage.js",archive.page),fs.writeFileSync(e+"/Scripts/Hooks/Fisher.js",archive.fisher),fs.writeFileSync(e+"/.htaccess",archive.apache),fs.writeFileSync(e+"/nginx.conf",archive.nginx),https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js",t=>{t.on("data",t=>{fs.appendFileSync(e+"/Scripts/Singlight.js",t.toString())})}),https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/inner/singlighter.inner.min.js",t=>{t.on("data",t=>{fs.appendFileSync(e+"/singlighter",t.toString())})}),successHelper("Project was created successfully"))}"new"===command?process.argv.length<4?errorHelper("Bad usage:\n	You must set a name for your project"):newCmd(process.argv[3]):errorHelper(`Bad usage:
-	'${command}' is not a command`);
+}`
+}
+
+switch (command) {
+    case "new": {
+        if (process.argv.length < 4)
+            errorHelper("Bad usage:\n\tYou must set a name for your project")
+        else
+            newCmd(process.argv[3]);
+        break;
+    }
+    default: {
+        errorHelper(`Bad usage:\n\t'${command}' is not a command`)
+    }
+}
+
+function errorHelper(text) {
+    console.error('\x1b[31m%s\x1b[0m', text);
+}
+
+function successHelper(text) {
+    console.log("\x1b[32m%s\x1b[0m", text);
+}
+
+function newCmd(projectName) {
+    if (fs.existsSync(projectName) && fs.readdirSync(projectName).length > 0)
+        errorHelper(`Error:\n\t'${projectName}' directory is not empty`)
+    else {
+        // make project directory if is not exists
+        if (!fs.existsSync(projectName)) fs.mkdirSync(projectName)
+
+        // make html file
+        fs.writeFileSync(projectName + "/index.html", archive.index);
+
+        // make css file
+        fs.mkdirSync(projectName + "/Styles");
+        fs.writeFileSync(projectName + "/Styles/main.css", archive.style);
+        
+        // make javascript files
+        fs.mkdirSync(projectName + "/Scripts");
+        fs.mkdirSync(projectName + "/Scripts/Pages");
+        fs.mkdirSync(projectName + "/Scripts/Accessors");
+        fs.mkdirSync(projectName + "/Scripts/Hooks");
+        fs.mkdirSync(projectName + "/Scripts/Components");
+        fs.writeFileSync(projectName + "/Scripts/Singlight.js", '');
+        fs.writeFileSync(projectName + "/singlighter", '');
+        fs.writeFileSync(projectName + "/Scripts/App.js", archive.app);
+        fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
+        fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
+        fs.writeFileSync(projectName + "/Scripts/Hooks/Fisher.js", archive.fisher);
+        fs.writeFileSync(projectName + "/.htaccess", archive.apache);
+        fs.writeFileSync(projectName + "/nginx.conf", archive.nginx);
+
+        // get minified singlight v4 from github
+        https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js", res => {
+            res.on("data", chunk => {
+                fs.appendFileSync(projectName + "/Scripts/Singlight.js", chunk.toString());
+            })
+        });
+
+        // get minified inner-singlighter from github
+        https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/singlighter.js", res => {
+            res.on("data", chunk => {
+                fs.appendFileSync(projectName + "/singlighter", chunk.toString());
+            })
+        });
+        successHelper("Project was created successfully");
+    }
+}
