@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const fs  = require("fs");
+const fs = require("fs");
 const https = require("https");
 
 const command = process.argv[2];
@@ -70,6 +70,10 @@ export default {
 }
 
 switch (command) {
+    case undefined: {
+        infoHelper("Hi! I'm here ...");
+        break;
+    }
     case "new": {
         if (process.argv.length < 4)
             errorHelper("Bad usage:\n\tYou must set a name for your project")
@@ -90,6 +94,10 @@ function successHelper(text) {
     console.log("\x1b[32m%s\x1b[0m", text);
 }
 
+function infoHelper(text) {
+    console.info("\x1b[34m%s\x1b[0m", text);
+}
+
 function newCmd(projectName) {
     if (fs.existsSync(projectName) && fs.readdirSync(projectName).length > 0)
         errorHelper(`Error:\n\t'${projectName}' directory is not empty`)
@@ -103,7 +111,7 @@ function newCmd(projectName) {
         // make css file
         fs.mkdirSync(projectName + "/Styles");
         fs.writeFileSync(projectName + "/Styles/main.css", archive.style);
-        
+
         // make javascript files
         fs.mkdirSync(projectName + "/Scripts");
         fs.mkdirSync(projectName + "/Scripts/Pages");
