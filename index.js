@@ -49,7 +49,7 @@ export default class HomePage extends Page {
 }`,
     fisher: `// import ...
 
-export default hooks = {
+export default {
     // ...
 };`,
     apache: `<IfModule mod_negotiation.c>
