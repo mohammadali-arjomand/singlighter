@@ -52,7 +52,10 @@ switch (command) {
         break;
     }
     case "serve": {
-        serveCmd();
+        if (process.argv.length < 4)
+            serveCmd();
+        else
+            !isNaN(process.argv[3]) ? serveCmd(Number(process.argv[3])) : errorHelper("Port must be numeric")
         break;
     }
     default: {
@@ -117,8 +120,8 @@ function makeHookCmd(hookName) {
     }
 }
 
-function serveCmd() {
-    successHelper("Server was started on [http://localhost:8000] - Press Ctrl+C for stop server")
+function serveCmd(port=8000) {
+    const serverStarted = () => successHelper(`Server was started on [http://localhost:${port}] - Press Ctrl+C for stop server`);
 
     const serverHandler = (req, res) => {
         req.url = "." + req.url;
@@ -130,11 +133,22 @@ function serveCmd() {
         res.end();
     };
 
-    let server = http.createServer(serverHandler).listen(8000);
+    let server = http.createServer(serverHandler).listen(port);
+
+    const handleError = () => {
+        errorHelper(`Port ${port} is busy, Try port ${port+1}`)
+        port++;
+        server = http.createServer(serverHandler).listen(port);
+        server.on("error", () => handleError());
+        server.on("listening", serverStarted);
+    };
+
+    server.on("error", handleError);
+    server.on("listening", serverStarted);
 
     fs.watch(".", () => {
-        successHelper("Files was modified, Server was restarted");
+        successHelper("Files was modified, Restarting server ...");
         server.close();
-        server = http.createServer(serverHandler).listen(8000);
+        server = http.createServer(serverHandler).listen(port);
     })
 }
