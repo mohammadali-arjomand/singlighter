@@ -25,9 +25,11 @@ const archive = {
 }`,
     app: `import { Singlight } from './Singlight.js';
 import Router from './Router.js';
+import hooks from './Hooks/Fisher.js';
 
 const app = new Singlight();
 app.router(Router);
+app.hooks(hooks);
 app.mount("#app");
 app.start();`,
     router: `import { Router } from './Singlight.js';
@@ -43,7 +45,12 @@ export default class HomePage extends Page {
     template() {
         return "<h1>Hi there!</h1>";
     }
-}`
+}`,
+    fisher: `// import ...
+
+export default hooks = {
+    // ...
+};`
 }
 
 switch (command) {
@@ -84,11 +91,15 @@ function newCmd(projectName) {
         // make javascript files
         fs.mkdirSync(projectName + "/Scripts");
         fs.mkdirSync(projectName + "/Scripts/Pages");
+        fs.mkdirSync(projectName + "/Scripts/Accessors");
+        fs.mkdirSync(projectName + "/Scripts/Hooks");
+        fs.mkdirSync(projectName + "/Scripts/Components");
         fs.writeFileSync(projectName + "/Scripts/Singlight.js", '');
         fs.writeFileSync(projectName + "/singlighter", '');
         fs.writeFileSync(projectName + "/Scripts/App.js", archive.app);
         fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
         fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
+        fs.writeFileSync(projectName + "/Scripts/Hooks/Fisher.js", archive.fisher);
 
         // get minified singlight v4 from github
         https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js", res => {
