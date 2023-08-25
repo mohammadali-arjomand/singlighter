@@ -24,7 +24,7 @@ const archive = {
     padding: 0;
     font-family: sans-serif;
 }`,
-    app: `import { Singlight } from './Singlight.js';
+    app: `import Singlight from './Singlight.js';
 import Router from './Router.js';
 import hooks from './Hooks/Fisher.js';
 
