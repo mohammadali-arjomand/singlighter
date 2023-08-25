@@ -1,6 +1,6 @@
 {
   "name": "singlighter",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "An installer/assistant for SinglightJs framework",
   "main": "index.js",
   "bin": "index.js",
