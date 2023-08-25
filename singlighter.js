@@ -24,7 +24,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v" + JSON.parse(fs.readFileSync("./package.json")).version);
+        infoHelper("v2.1.1");
         break;
     }
     case "help": {
