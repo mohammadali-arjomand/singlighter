@@ -66,7 +66,13 @@ export default {
 </IfModule>`,
     nginx: `location / {
   try_files $uri $uri/ /index.html;
-}`
+}`,
+    help: `Usage:
+    npx singlighter@latest <command> [option]
+Commands:
+    version => Get singlighter version
+    help => Get help
+    new => Create new project (option is required)`
 }
 
 switch (command) {
@@ -79,12 +85,7 @@ switch (command) {
         break;
     }
     case "help": {
-        infoHelper(`Usage:
-    npx singlighter@latest <command> [option]
-Commands:
-    version => Get singlighter version
-    help => Get help
-    new => Create new project (option is required)`);
+        infoHelper(archive.help);
         break;
     }
     case "new": {
@@ -95,7 +96,7 @@ Commands:
         break;
     }
     default: {
-        errorHelper(`Bad usage:\n\t'${command}' is not a command`)
+        errorHelper(`Bad usage:\n\t'${command}' is not a command, use 'help' command for see Methods of usage`)
     }
 }
 

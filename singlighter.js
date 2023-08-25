@@ -15,7 +15,17 @@ export default class {{PAGENAME}} extends Page {
 }`,
     function: `export default function {{NAME}}() {
     // ...
-}`
+}`,
+    help: `Usage:
+    npx singlighter@latest <command> [option]
+Commands:
+    version => Get singlighter version
+    help => Get help
+    make:page => Create new page (option is required)
+    make:accessor => Create new accessor (option is required)
+    make:component => Create new component (option is required)
+    make:hook => Create new hook (option is required)
+    serve => Serving project on localhost`
 }
 
 switch (command) {
@@ -28,20 +38,7 @@ switch (command) {
         break;
     }
     case "help": {
-        infoHelper(`Usage:
-    npx singlighter@latest <command> [option]
-Commands:
-    version => Get singlighter version
-    help => Get help
-    make:page => Create new page (option is required)
-    make:accessor => Create new accessor (option is required)
-    make:component => Create new component (option is required)
-    make:hook => Create new hook (option is required)
-    serve => Serving project on localhost`);
-        break;
-    }
-    case "make:": {
-        makeCmd();
+        infoHelper(archive.help);
         break;
     }
     case "make:page": {
@@ -80,7 +77,7 @@ Commands:
         break;
     }
     default: {
-        errorHelper(`Bad usage:\n\t'${command}' is not a command`);
+        errorHelper(`Bad usage:\n\t'${command}' is not a command, use 'help' command for see Methods of usage`);
         break;
     }
 }
@@ -95,14 +92,6 @@ function successHelper(text) {
 
 function infoHelper(text) {
     console.info("\x1b[34m%s\x1b[0m", text);
-}
-
-function makeCmd() {
-    infoHelper(`All make commands:
-    make:page
-    make:accessor
-    make:component
-    make:hook`);
 }
 
 function makePageCmd(pageName) {
