@@ -29,7 +29,7 @@ switch (command) {
     }
     case "help": {
         infoHelper(`Usage:
-    node singlighter <command> [option]
+    npx singlighter@latest <command> [option]
 Commands:
     version => Get singlighter version
     help => Get help
