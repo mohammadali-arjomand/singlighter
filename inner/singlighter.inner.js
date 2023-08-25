@@ -12,6 +12,9 @@ export default class {{PAGENAME}} extends Page {
     setup() {
         // ...
     }
+}`,
+    accessor: `export default function {{ACCESSORNAME}}() {
+    // ...
 }`
 }
 
@@ -22,6 +25,13 @@ switch (command) {
         else
             makePageCmd(process.argv[3]);
         break;
+    }
+    case "make:accessor": {
+        if (process.argv.length < 4)
+            errorHelper("Bad usage:\n\tYou must set a name for your accessor")
+        else
+            makeAccessorCmd(process.argv[3]);
+        break;        
     }
     case "serve": {
         serveCmd();
@@ -44,6 +54,11 @@ function successHelper(text) {
 function makePageCmd(pageName) {
     fs.writeFileSync(`./Scripts/Pages/${pageName}.js`, archive.page.replace("{{PAGENAME}}", pageName));
     successHelper("Page was created successfully")
+}
+
+function makeAccessorCmd(accessorName) {
+    fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.accessor.replace("{{ACCESSORNAME}}", accessorName));
+    successHelper("Accessor was created successfully")
 }
 
 function serveCmd() {
