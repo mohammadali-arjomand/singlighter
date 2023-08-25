@@ -19,6 +19,27 @@ export default class {{PAGENAME}} extends Page {
 }
 
 switch (command) {
+    case undefined: {
+        infoHelper("Hi! I'm here ...");
+        break;
+    }
+    case "version": {
+        infoHelper("v" + JSON.parse(fs.readFileSync("./package.json")).version);
+        break;
+    }
+    case "help": {
+        infoHelper(`Usage:
+    node singlighter <command> [option]
+Commands:
+    version => Get singlighter version
+    help => Get help
+    make:page => Create new page (option is required)
+    make:accessor => Create new accessor (option is required)
+    make:component => Create new component (option is required)
+    make:hook => Create new hook (option is required)
+    serve => Serving project on localhost`);
+        break;
+    }
     case "make:": {
         makeCmd();
         break;

@@ -74,6 +74,19 @@ switch (command) {
         infoHelper("Hi! I'm here ...");
         break;
     }
+    case "version": {
+        infoHelper("v" + JSON.parse(fs.readFileSync("./package.json")).version);
+        break;
+    }
+    case "help": {
+        infoHelper(`Usage:
+    npx singlighter <command> [option]
+Commands:
+    version => Get singlighter version
+    help => Get help
+    new => Create new project (option is required)`);
+        break;
+    }
     case "new": {
         if (process.argv.length < 4)
             errorHelper("Bad usage:\n\tYou must set a name for your project")
