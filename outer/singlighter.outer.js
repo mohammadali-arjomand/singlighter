@@ -50,7 +50,22 @@ export default class HomePage extends Page {
 
 export default hooks = {
     // ...
-};`
+};`,
+    apache: `<IfModule mod_negotiation.c>
+  Options -MultiViews
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>`,
+    nginx: `location / {
+  try_files $uri $uri/ /index.html;
+}`
 }
 
 switch (command) {
@@ -100,6 +115,8 @@ function newCmd(projectName) {
         fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
         fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
         fs.writeFileSync(projectName + "/Scripts/Hooks/Fisher.js", archive.fisher);
+        fs.writeFileSync(projectName + "/.htaccess", archive.apache);
+        fs.writeFileSync(projectName + "/nginx.conf", archive.nginx);
 
         // get minified singlight v4 from github
         https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js", res => {
