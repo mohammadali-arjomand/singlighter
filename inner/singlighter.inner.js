@@ -31,7 +31,21 @@ switch (command) {
             errorHelper("Bad usage:\n\tYou must set a name for your accessor")
         else
             makeAccessorCmd(process.argv[3]);
-        break;        
+        break;
+    }
+    case "make:component": {
+        if (process.argv.length < 4)
+            errorHelper("Bad usage:\n\tYou must set a name for your component")
+        else
+            makeComponentCmd(process.argv[3]);
+        break;
+    }
+    case "make:hook": {
+        if (process.argv.length < 4)
+            errorHelper("Bad usage:\n\tYou must set a name for your hook")
+        else
+            makeHookCmd(process.argv[3]);
+        break;
     }
     case "serve": {
         serveCmd();
@@ -59,6 +73,16 @@ function makePageCmd(pageName) {
 function makeAccessorCmd(accessorName) {
     fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.function.replace("{{NAME}}", accessorName));
     successHelper("Accessor was created successfully")
+}
+
+function makeComponentCmd(componentName) {
+    fs.writeFileSync(`./Scripts/Components/${componentName}.js`, archive.function.replace("{{NAME}}", componentName));
+    successHelper("Component was created successfully")
+}
+
+function makeHookCmd(hookName) {
+    fs.writeFileSync(`./Scripts/Hooks/${hookName}.js`, archive.function.replace("{{NAME}}", hookName));
+    successHelper("Hook was created successfully")
 }
 
 function serveCmd() {
