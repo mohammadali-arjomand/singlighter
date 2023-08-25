@@ -1,5 +1,5 @@
 # Singlighter
-Singlighter is an installer/assistant for SinglightJs framework
+Singlighter is an installer/assistant for [SinglightJs](https://github.com/mohammadali-arjomand/singlightjs) framework
 
 # Installation
 Use this **npm** command for install **Singlighter**
@@ -19,14 +19,22 @@ Singlighter will making directories like it
 ```
 SinglightJs
 ├── Scripts
+│   ├── Accessors
+│   ├── Components
+│   ├── Hooks
+│   │   └── Fisher.js
 │   ├── Pages
 │   │   └── HomePage.js
-│   ├── Router.js
 │   ├── App.js
+│   ├── Router.js
 │   └── Singlight.js
 ├── Styles
 │   └── main.css
-└── index.html
+├── index.html
+├── nginx.conf
+├── singlighter
+└── .htaccess
+
 ```
 
 # License
