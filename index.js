@@ -113,7 +113,7 @@ class Singlight {
         });
     }
 }`,
-    simr: `\\Monster\\App\\Models\\Singlight::route();`
+    simr: `\n\n\\Monster\\App\\Models\\Singlight::route();`
 }
 
 switch (command) {
