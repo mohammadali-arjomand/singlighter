@@ -113,7 +113,13 @@ class Singlight {
         });
     }
 }`,
-    simr: `\n\n\\Monster\\App\\Models\\Singlight::route();`
+    simr: `\n\n\\Monster\\App\\Models\\Singlight::route();`,
+    monsterconf: `<?php
+
+return [
+    "controllers_allowed" => []
+];
+`
 }
 
 switch (command) {
@@ -122,7 +128,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.1");
+        infoHelper("v2.3.2");
         break;
     }
     case "help": {
@@ -205,6 +211,7 @@ function newCmd(projectName) {
 
 function monsterizeCmd() {
     if (!fs.existsSync("public")) fs.mkdirSync("public")
+    if (!fs.existsSync("config")) fs.mkdirSync("config")
 
     fs.writeFileSync("views/index.php", archive.index);
 
@@ -224,6 +231,7 @@ function monsterizeCmd() {
     fs.writeFileSync("public/Scripts/Hooks/Fisher.js", archive.fisher);
     fs.writeFileSync("public/Scripts/Lib/Monster.js", archive.monsterjs);
     fs.writeFileSync("App/Models/Singlight.php", archive.singlightphp);
+    fs.writeFileSync("config/singlight.php", archive.monsterconf);
     fs.writeFileSync("singlighter", '');
     fs.appendFileSync("routes/web.php", archive.simr);
     fs.rmSync("public/style.css");
