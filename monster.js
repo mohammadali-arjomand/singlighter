@@ -33,7 +33,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.3 - Monsterized");
+        infoHelper("v2.3.4 - Monsterized");
         break;
     }
     case "help": {

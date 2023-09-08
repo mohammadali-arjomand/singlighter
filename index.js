@@ -19,6 +19,21 @@ const archive = {
 
 </body>
 </html>`,
+    indexphp: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/Styles/main.css">
+    <title>SinglightJs + API-Monster</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+    <script type="module" src="/public/Scripts/App.js"></script>
+
+</body>
+</html>`,
     style: `* {
     margin: 0;
     padding: 0;
@@ -128,7 +143,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.3");
+        infoHelper("v2.3.4");
         break;
     }
     case "help": {
