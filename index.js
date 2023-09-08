@@ -143,7 +143,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.4");
+        infoHelper("v2.3.5");
         break;
     }
     case "help": {
@@ -228,7 +228,7 @@ function monsterizeCmd() {
     if (!fs.existsSync("public")) fs.mkdirSync("public")
     if (!fs.existsSync("config")) fs.mkdirSync("config")
 
-    fs.writeFileSync("views/index.php", archive.index);
+    fs.writeFileSync("views/index.php", archive.indexphp);
 
     fs.mkdirSync("public/Styles");
     fs.writeFileSync("public/Styles/main.css", archive.style);

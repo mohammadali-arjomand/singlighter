@@ -34,7 +34,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.4");
+        infoHelper("v2.3.5");
         break;
     }
     case "help": {
