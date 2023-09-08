@@ -128,7 +128,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.2");
+        infoHelper("v2.3.3");
         break;
     }
     case "help": {
@@ -249,5 +249,5 @@ function monsterizeCmd() {
             fs.appendFileSync("singlighter", chunk.toString());
         })
     });
-    successHelper("Project was created successfully");
+    successHelper("SinglightJs was added to project successfully");
 }
