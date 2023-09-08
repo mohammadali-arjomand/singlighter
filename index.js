@@ -75,44 +75,45 @@ Commands:
     new => Create new project (option is required)
     monsterize => Add SinglightJs to API-Monster project`,
     monsterjs: `function remonster(controller, data={}, callback=()=>{}) {
-        let form = new FormData
-        for (let item in data) {
-            form.append(item, data[item])
-        }
-        let [ className, methodName ] = controller.split("@");
-        fetch(\`http://\${location.host}/singlight/\${className}/\${methodName}\`, {body: form, method: "POST"})
-            .then(res => res.json())
-            .then(data => {
-                monster = data
-                callback()
-            })
+    let form = new FormData
+    for (let item in data) {
+        form.append(item, data[item])
     }
+    let [ className, methodName ] = controller.split("@");
+    fetch(\`http://\${location.host}/singlight/\${className}/\${methodName}\`, {body: form, method: "POST"})
+        .then(res => res.json())
+        .then(data => {
+            monster = data
+            callback()
+        })
+}
     
-    export { remonster }`,
+export { remonster }`,
     singlightphp: `<?php
 
-    namespace Monster\\App\\Models;
+namespace Monster\\App\\Models;
     
-    class Singlight {
-        public static function route() {
-            \\Monster\\App\\Route::post('/singlight/{controller}/{method}', function ($controller, $method) {
-                $config = require "./config/singlight.php";
-                $isAllow = false;
-                foreach ($config["controllers_allowed"] as $allowed) {
-                    $isAllow = "$controller@$method" === $allowed;
-                }
-                if (!$isAllow) {
-                    http_response_code(403);
-                    echo "<h1>403 - Access denied</h1>";
-                    die();
-                }
-                $class = '\\\\Monster\\\\App\\\\Controllers\\\\' . $controller;
-                $instance = new $class;
-                header("Content-type: application/json");
-                echo json_encode($instance->$method(...$_POST));
-            });
-        }
-    }`
+class Singlight {
+    public static function route() {
+        \\Monster\\App\\Route::post('/singlight/{controller}/{method}', function ($controller, $method) {
+            $config = require "./config/singlight.php";
+            $isAllow = false;
+            foreach ($config["controllers_allowed"] as $allowed) {
+                $isAllow = "$controller@$method" === $allowed;
+            }
+            if (!$isAllow) {
+                http_response_code(403);
+                echo "<h1>403 - Access denied</h1>";
+                die();
+            }
+            $class = '\\\\Monster\\\\App\\\\Controllers\\\\' . $controller;
+            $instance = new $class;
+            header("Content-type: application/json");
+            echo json_encode($instance->$method(...$_POST));
+        });
+    }
+}`,
+    simr: `\\Monster\\App\\Models\\Singlight::route();`
 }
 
 switch (command) {
@@ -121,7 +122,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.0");
+        infoHelper("v2.3.1");
         break;
     }
     case "help": {
@@ -217,13 +218,15 @@ function monsterizeCmd() {
     fs.mkdirSync("public/Scripts/Components");
     fs.mkdirSync("public/Scripts/Lib");
     fs.writeFileSync("public/Scripts/Singlight.js", '');
-    fs.writeFileSync("singlighter", '');
     fs.writeFileSync("public/Scripts/App.js", archive.app);
     fs.writeFileSync("public/Scripts/Router.js", archive.router);
     fs.writeFileSync("public/Scripts/Pages/HomePage.js", archive.page);
     fs.writeFileSync("public/Scripts/Hooks/Fisher.js", archive.fisher);
     fs.writeFileSync("public/Scripts/Lib/Monster.js", archive.monsterjs);
     fs.writeFileSync("App/Models/Singlight.php", archive.singlightphp);
+    fs.writeFileSync("singlighter", '');
+    fs.appendFileSync("routes/web.php", archive.simr);
+    fs.rmSync("public/style.css");
 
     // get minified singlight v4 from github
     https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlightjs/master/scripts/singlight.min.js", res => {
@@ -233,9 +236,9 @@ function monsterizeCmd() {
     });
 
     // get minified inner-singlighter from github
-    https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/singlighter.js", res => {
+    https.get("https://raw.githubusercontent.com/mohammadali-arjomand/singlighter/main/monster.js", res => {
         res.on("data", chunk => {
-            fs.appendFileSync("public/singlighter", chunk.toString());
+            fs.appendFileSync("singlighter", chunk.toString());
         })
     });
     successHelper("Project was created successfully");
