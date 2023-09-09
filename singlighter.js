@@ -17,7 +17,7 @@ export default class {{PAGENAME}} extends Page {
     // ...
 }`,
     help: `Usage:
-    npx singlighter@latest <command> [option]
+    node singlighter <command> [option]
 Commands:
     version => Get singlighter version
     help => Get help
@@ -34,7 +34,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.5");
+        infoHelper("v2.3.6");
         break;
     }
     case "help": {

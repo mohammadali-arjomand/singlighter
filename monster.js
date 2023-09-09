@@ -1,5 +1,4 @@
 const fs  = require("fs");
-const http = require("http");
 
 const command = process.argv[2];
 const archive = {
@@ -17,7 +16,7 @@ export default class {{PAGENAME}} extends Page {
     // ...
 }`,
     help: `Usage:
-    npx singlighter@latest <command> [option]
+    node singlighter <command> [option]
 Commands:
     version => Get singlighter version
     help => Get help
@@ -33,7 +32,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.5 - Monsterized");
+        infoHelper("v2.3.6 - Monsterized");
         break;
     }
     case "help": {
