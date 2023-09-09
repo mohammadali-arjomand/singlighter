@@ -143,7 +143,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.6");
+        infoHelper("v2.3.7");
         break;
     }
     case "help": {
