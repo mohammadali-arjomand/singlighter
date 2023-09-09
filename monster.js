@@ -2,7 +2,7 @@ const fs  = require("fs");
 
 const command = process.argv[2];
 const archive = {
-    page: `import { Page } from '../singlight.js';
+    page: `import { Page } from '../Singlight.js';
 
 export default class {{PAGENAME}} extends Page {
     template() {
