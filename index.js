@@ -55,7 +55,7 @@ const router = new Router();
 router.addRoute("/", HomePage);
 
 export default router;`,
-    page: `import { Page } from '../singlight.js';
+    page: `import { Page } from '../Singlight.js';
 
 export default class HomePage extends Page {
     template() {
@@ -143,7 +143,7 @@ switch (command) {
         break;
     }
     case "version": {
-        infoHelper("v2.3.7");
+        infoHelper("v2.3.8");
         break;
     }
     case "help": {
