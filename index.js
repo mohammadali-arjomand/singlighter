@@ -317,6 +317,7 @@ function newCmd(projectName) {
         fs.writeFileSync(projectName + "/Scripts/Components/BottomMenu.js", archive.component);
         fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
         fs.writeFileSync(projectName + "/Scripts/Hooks/Fisher.js", archive.fisher);
+        fs.writeFileSync(projectName + "/Scripts/Accessors/Manager.js", archive.acsmgr);
         fs.writeFileSync(projectName + "/.htaccess", archive.apache);
         fs.writeFileSync(projectName + "/nginx.conf", archive.nginx);
 
@@ -358,6 +359,7 @@ function monsterizeCmd() {
     fs.writeFileSync("public/Scripts/Components/BottomMenu.js", archive.component);
     fs.writeFileSync("public/Scripts/Pages/HomePage.js", archive.page);
     fs.writeFileSync("public/Scripts/Hooks/Fisher.js", archive.fisher);
+    fs.writeFileSync("public/Scripts/Accessors/Manager.js", archive.acsmgr);
     fs.writeFileSync("public/Scripts/Lib/Monster.js", archive.monsterjs);
     fs.writeFileSync("App/Models/Singlight.php", archive.singlightphp);
     fs.writeFileSync("config/singlight.php", archive.monsterconf);
