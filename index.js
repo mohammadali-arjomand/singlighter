@@ -125,6 +125,7 @@ import accessors from "./Accessors/Manager.js";
 const app = new Singlight();
 app.router(Router);
 app.hooks(hooks);
+app.accessors(accessors);
 app.mount("#app");
 app.start();`,
     router: `import { Router } from "./Singlight.js";
@@ -173,6 +174,11 @@ export default {
     // beforeMount,
     // afterMount
 };`,
+    acsmgr: `// import accessors ...
+
+export default {
+    // register accessors ...
+}`,
     apache: `<IfModule mod_negotiation.c>
   Options -MultiViews
 </IfModule>
