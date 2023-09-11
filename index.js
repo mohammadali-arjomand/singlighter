@@ -37,35 +37,141 @@ const archive = {
     style: `* {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html, body {
+    height: 100vh;
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #be30cc;
+}
+
+.divider {
+    padding: 1px;
+    height: 20vh;
+    background: white;
+    opacity: 50%;
+    margin: 0 50px;
+}
+
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.bottom-menu ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0 50px;
+}
+
+.bottom-menu li {
+    padding: 10px;
+    width: 15vw;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+.bottom-menu li:hover {
+    transition: .5s;
+    background: white;
+}
+
+.bottom-menu a {
+    text-decoration: none;
+    color: white;
+}
+
+.bottom-menu li:hover a {
+    transition: .5s;
+    color: #be30cc;
+}
+
+@media screen and (max-width: 650px) {
+    #app {
+        flex-direction: column;
+    }
+    .divider {
+        height: auto;
+        width: 20vw;
+        margin: 20px 0;
+    }
+    p {
+        text-align: center;
+    }
+    .bottom-menu ul {
+        padding: 0;
+    }
+    .bottom-menu li {
+        border-radius: 0;
+        width: 40vw;
+    }
 }`,
-    app: `import Singlight from './Singlight.js';
-import Router from './Router.js';
-import hooks from './Hooks/Fisher.js';
+    app: `import Singlight from "./Singlight.js";
+import Router from "./Router.js";
+import hooks from "./Hooks/Fisher.js";
+import accessors from "./Accessors/Manager.js";
 
 const app = new Singlight();
 app.router(Router);
 app.hooks(hooks);
 app.mount("#app");
 app.start();`,
-    router: `import { Router } from './Singlight.js';
-import HomePage from './Pages/HomePage.js';
+    router: `import { Router } from "./Singlight.js";
+import HomePage from "./Pages/HomePage.js";
 
 const router = new Router();
 router.addRoute("/", HomePage);
 
 export default router;`,
+    component: `export default function BottomMenu() {
+    return /*html*/\`
+        <div class="bottom-menu">
+            <ul>
+                <li><a href="https://github.com/mohammadali-arjomand/singlightjs" target="_blank">GitHub</a></li>
+                <li><a href="https://github.com/mohammadali-arjomand/singlightjs/wiki" target="_blank">Document</a></li>
+                <li><a href="mailto:arjomand.dev@gmail.com">Email</a></li>
+            </ul>
+        </div>
+    \`;
+}`,
     page: `import { Page } from '../Singlight.js';
+import BottomMenu from "../Components/BottomMenu.js";
 
 export default class HomePage extends Page {
+    messageVisible = false;
+    components = {
+        BottomMenu
+    }
     template() {
-        return "<h1>Hi there!</h1>";
+        return /*html*/\`
+            <h1>Hi, SinglightJs!</h1>
+            <div class="divider"></div>
+            <p>
+                Draw You're Favorite WebApp
+                <br>
+                by the Magic
+            </p>
+            <sl-BottomMenu></sl-BottomMenu>
+        \`;
     }
 }`,
-    fisher: `// import ...
+    fisher: `// import beforeMount from "./beforeMount.js";
+// import afterMount from "./afterMount.js";
 
 export default {
-    // ...
+    // beforeMount,
+    // afterMount
 };`,
     apache: `<IfModule mod_negotiation.c>
   Options -MultiViews
@@ -110,7 +216,7 @@ namespace Monster\\App\\Models;
     
 class Singlight {
     public static function route() {
-        \\Monster\\App\\Route::post('/singlight/{controller}/{method}', function ($controller, $method) {
+        \\Monster\\App\\Route::post("/singlight/{controller}/{method}", function ($controller, $method) {
             $config = require "./config/singlight.php";
             $isAllow = false;
             foreach ($config["controllers_allowed"] as $allowed) {
@@ -121,7 +227,7 @@ class Singlight {
                 echo "<h1>403 - Access denied</h1>";
                 die();
             }
-            $class = '\\\\Monster\\\\App\\\\Controllers\\\\' . $controller;
+            $class = "\\\\Monster\\\\App\\\\Controllers\\\\" . $controller;
             $instance = new $class;
             header("Content-type: application/json");
             echo json_encode($instance->$method(...$_POST));
@@ -202,6 +308,7 @@ function newCmd(projectName) {
         fs.writeFileSync(projectName + "/singlighter", '');
         fs.writeFileSync(projectName + "/Scripts/App.js", archive.app);
         fs.writeFileSync(projectName + "/Scripts/Router.js", archive.router);
+        fs.writeFileSync(projectName + "/Scripts/Components/BottomMenu.js", archive.component);
         fs.writeFileSync(projectName + "/Scripts/Pages/HomePage.js", archive.page);
         fs.writeFileSync(projectName + "/Scripts/Hooks/Fisher.js", archive.fisher);
         fs.writeFileSync(projectName + "/.htaccess", archive.apache);
@@ -242,6 +349,7 @@ function monsterizeCmd() {
     fs.writeFileSync("public/Scripts/Singlight.js", '');
     fs.writeFileSync("public/Scripts/App.js", archive.app);
     fs.writeFileSync("public/Scripts/Router.js", archive.router);
+    fs.writeFileSync("public/Scripts/Components/BottomMenu.js", archive.component);
     fs.writeFileSync("public/Scripts/Pages/HomePage.js", archive.page);
     fs.writeFileSync("public/Scripts/Hooks/Fisher.js", archive.fisher);
     fs.writeFileSync("public/Scripts/Lib/Monster.js", archive.monsterjs);

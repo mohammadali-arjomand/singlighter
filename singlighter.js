@@ -7,14 +7,24 @@ const archive = {
 
 export default class {{PAGENAME}} extends Page {
     template() {
-        return '';
+        return /*html*/\`
+            <!-- You're HTML codes must be here -->
+        \`;
     }
     setup() {
         // ...
     }
 }`,
-    function: `export default function {{NAME}}() {
-    // ...
+    accessor: `export default function {{NAME}}() {
+    return true; // or false
+}`,
+    component: `export default function {{NAME}}() {
+    return /*html*/\`
+        <!-- You're HTML codes must be here -->
+    \`;
+}`,
+    hook: `export default function {{NAME}}() {
+    // You're JavaScript codes must be here
 }`,
     help: `Usage:
     node singlighter <command> [option]
@@ -107,7 +117,7 @@ function makeAccessorCmd(accessorName) {
     if (fs.existsSync(`./Scripts/Accessors/${accessorName}.js`))
         errorHelper(`'${accessorName}' already exists`)
     else {
-        fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.function.replace("{{NAME}}", accessorName));
+        fs.writeFileSync(`./Scripts/Accessors/${accessorName}.js`, archive.accessor.replace("{{NAME}}", accessorName));
         successHelper("Accessor was created successfully")
     }
 }
@@ -116,7 +126,7 @@ function makeComponentCmd(componentName) {
     if (fs.existsSync(`./Scripts/Components/${componentName}.js`))
         errorHelper(`'${componentName}' already exists`)
     else {
-        fs.writeFileSync(`./Scripts/Components/${componentName}.js`, archive.function.replace("{{NAME}}", componentName));
+        fs.writeFileSync(`./Scripts/Components/${componentName}.js`, archive.component.replace("{{NAME}}", componentName));
         successHelper("Component was created successfully")
     }
 }
@@ -125,7 +135,7 @@ function makeHookCmd(hookName) {
     if (fs.existsSync(`./Scripts/Hooks/${hookName}.js`))
         errorHelper(`'${hookName}' already exists`)
     else {
-        fs.writeFileSync(`./Scripts/Hooks/${hookName}.js`, archive.function.replace("{{NAME}}", hookName));
+        fs.writeFileSync(`./Scripts/Hooks/${hookName}.js`, archive.hook.replace("{{NAME}}", hookName));
         successHelper("Hook was created successfully")
     }
 }
